@@ -1,2 +1,2 @@
 # game-manager
-Beaster managed games handler.
+Beaster managed games handler

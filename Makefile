@@ -9,5 +9,7 @@ execute:
 
 run: build execute
 
-mock: build
+execute-mock:
 	export FLASK_APP=mocked_game_api.py; cd ./mock; flask run --port=8080
+
+mock: build execute-mock

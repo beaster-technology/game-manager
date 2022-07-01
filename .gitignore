@@ -20,3 +20,4 @@ docs/_build/
 bin
 lib
 pyvenv*
+***/__pycache__

@@ -12,14 +12,14 @@ from model.exceptions.invalid_request_payload import InvalidRequestPayload
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games():
     try:
-        response = GameService.list_games()
+        response = GameService.list()
         return Response(response, status=200, mimetype='application/json')
     except Exception as error_message:
         return Response(f'Unable to retrieve game list: {error_message}', status=500)
 
 @beaster_game_api.route('/game/<id>', methods=['GET'])
 def get_game(id):
-    try: response = GameService.get_game(id)
+    try: response = GameService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
@@ -31,7 +31,7 @@ def get_game(id):
 
 @beaster_game_api.route('/game/<id>/result', methods=['GET'])
 def get_result(id):
-    try: response = ResultService.get_result(id)
+    try: response = ResultService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
@@ -43,7 +43,7 @@ def get_result(id):
 
 @beaster_game_api.route('/game', methods=['POST'])
 def create_game():
-    try: response = GameService.create_game(request.json)
+    try: response = GameService.create(request.json)
     except InvalidRequestPayload as error_message:
         return Response(f'Invalid creation request payload: {error_message}', status=400)
     except Exception as error_message:
@@ -53,7 +53,7 @@ def create_game():
 
 @beaster_game_api.route('/game/<id>/close', methods=['POST'])
 def close_game(id):
-    try: GameService.close_game(id)
+    try: GameService.close(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
@@ -65,7 +65,7 @@ def close_game(id):
 
 @beaster_game_api.route('/game/<id>', methods=['PUT'])
 def update_game(id):
-    try: GameService.update_game(id, request.json)
+    try: GameService.update(id, request.json)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except InvalidRequestPayload:
@@ -79,7 +79,7 @@ def update_game(id):
 
 @beaster_game_api.route('/game/<id>', methods=['DELETE'])
 def delete_game(id) -> None:
-    try: GameService.delete_game(id)
+    try: GameService.delete(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except Exception as error_message:
@@ -89,7 +89,7 @@ def delete_game(id) -> None:
 
 @beaster_game_api.route('/game/<id>/result', methods=['DELETE'])
 def delete_result(id) -> None:
-    try: ResultService.delete_result(id)
+    try: ResultService.delete(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except Exception as error_message:

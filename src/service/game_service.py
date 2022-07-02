@@ -16,12 +16,12 @@ from serializer.game_serializer import GameSerializer
 class GameService:
 
     @staticmethod
-    def list_games(open_only: bool=True):
+    def list(open_only: bool=True):
         games: list[Game] = GamesDAO.list(open_only)
         return GameSerializer.serialize_list(games)
 
     @staticmethod
-    def get_game(id: str):
+    def get(id: str):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
@@ -31,7 +31,7 @@ class GameService:
         return GameSerializer.serialize(game)
 
     @staticmethod
-    def create_game(request):
+    def create(request):
         game = to_game(request)
         GameValidator.validate(game)
 
@@ -39,7 +39,7 @@ class GameService:
         return GameSerializer.serialize(game)
 
     @staticmethod
-    def close_game(id):
+    def close(id):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
@@ -61,7 +61,7 @@ class GameService:
         GamesDAO.close(id)
 
     @staticmethod
-    def update_game(id, request):
+    def update(id, request):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
@@ -71,7 +71,7 @@ class GameService:
         GamesDAO.update(game_update)
 
     @staticmethod
-    def delete_game(id):
+    def delete(id):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 

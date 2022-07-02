@@ -43,6 +43,21 @@ class GameService:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
+        '''
+        Here you need to determine the winners
+        and split the absolute pot within them
+
+        you can write the calculation at pot_splitter.py
+        and use it here - this way we decouple the calculation
+        from the game service
+
+        here you will also need to build a Result object and
+        post it in the results collection at firestore.
+        to do it you can use insert() method of ResultService :)
+
+        good luck!
+        '''
+
         GamesDAO.close(id)
 
     @staticmethod

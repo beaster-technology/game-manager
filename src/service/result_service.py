@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from model.game import Game
 from model.result import Result
 
 from model.exceptions.invalid_uuid import InvalidUUID
@@ -20,6 +21,10 @@ class ResultService:
         if result == '': raise ResourceNotFound
 
         return ResultSerializer.serialize(result)
+
+    @staticmethod
+    def insert_result(game: Game):
+        ResultsDAO.insert(game)
 
     @staticmethod
     def delete_result(id: str):

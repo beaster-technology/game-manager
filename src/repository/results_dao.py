@@ -23,6 +23,11 @@ class ResultsDAO: # This guy needs to connect to firebase firestore
         return target_result
 
     @staticmethod
+    def insert(result: Result):
+        # Delete game result with provided ID
+        pass
+
+    @staticmethod
     def delete(id: str):
         # Delete game result with provided ID
         pass

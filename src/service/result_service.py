@@ -1,12 +1,13 @@
 from uuid import UUID
+
 from model.result import Result
-
-from serializer.result_serializer import ResultSerializer
-
-from repository.results_dao import ResultsDAO
 
 from model.exceptions.invalid_uuid import InvalidUUID
 from model.exceptions.resource_not_found import ResourceNotFound
+
+from repository.results_dao import ResultsDAO
+
+from serializer.result_serializer import ResultSerializer
 
 class ResultService:
     

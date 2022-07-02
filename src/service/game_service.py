@@ -1,20 +1,17 @@
-from collections import namedtuple
-from json import loads
 from uuid import UUID
+
 from model.game import Game
-from model.competitor import Competitor
-from model.player import Player
-from model.bet import Bet
 
-from serializer.game_serializer import GameSerializer
-from serializer.player_serializer import PlayerSerializer
-
-from repository.games_dao import GamesDAO
-from repository.players_dao import PlayersDAO
+from service.utils import to_game
 
 from model.exceptions.invalid_uuid import InvalidUUID
 from model.exceptions.resource_not_found import ResourceNotFound
-from model.exceptions.invalid_request_payload import InvalidRequestPayload
+
+from repository.games_dao import GamesDAO
+
+from validator.game_validator import GameValidator
+
+from serializer.game_serializer import GameSerializer
 
 class GameService:
 
@@ -34,25 +31,11 @@ class GameService:
         return GameSerializer.serialize(game)
 
     @staticmethod
-    def get_players(id: str):
-        try: _ = UUID(id, version=4)
-        except ValueError: raise InvalidUUID
-        
-        players = PlayersDAO.retrieve(id)
-        if players == '': raise ResourceNotFound
-
-        return PlayerSerializer.serialize_list(players)
-
-    @staticmethod
     def create_game(request):
-
-        # Validate body
-
-        # Generate game creation class
-        game = Game((Competitor('Brasil'), Competitor('Espanha')), [])
+        game = to_game(request)
+        GameValidator.validate(game)
 
         GamesDAO.insert(game)
-
         return GameSerializer.serialize(game)
 
     @staticmethod
@@ -67,24 +50,10 @@ class GameService:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
-        # Validate game update payload
-
-        # Build game object
-        game_update = Game(('Brazil', 'Spain'), [])
+        game_update = to_game(request)
+        GameValidator.validate(game_update)
 
         GamesDAO.update(game_update)
-
-    @staticmethod
-    def update_players(id, request):
-        try: _ = UUID(id, version=4)
-        except ValueError: raise InvalidUUID
-
-        # Validate players update payload
-
-        # Build players objects list
-        game_update = Player('Besca', Bet(10))
-
-        PlayersDAO.update(game_update)
 
     @staticmethod
     def delete_game(id):

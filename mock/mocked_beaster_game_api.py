@@ -7,9 +7,10 @@ path.append('../src')
 from model.game import Game
 from model.player import Player
 from model.bet import Bet
-from model.winner import Winner
+from model.result import Result
 
 from serializer.game_serializer import GameSerializer
+from serializer.result_serializer import ResultSerializer
 from serializer.player_serializer import PlayerSerializer
 
 app = Flask(__name__)
@@ -38,10 +39,10 @@ MOCKED_GAME_LIST = [
         open_at=MOCKED_EPOCH + 3600, # Born 1 hour after previous game
     ),
 ]
-MOCKED_WINNER_LIST = [ # Created at the moment their game closed
-    Winner('Tanan', Bet(50, MOCKED_EPOCH), '61be0f5f-a5c1-4e0a-92ef-686eac1e3699'),
-    Winner('Besca', Bet(35, MOCKED_EPOCH), '61be0f5f-a5c1-4e0a-92ef-686eac1e3699')
-]
+MOCKED_RESULT = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
+    Player('Tanan', Bet(50, MOCKED_EPOCH)),
+    Player('Besca', Bet(35, MOCKED_EPOCH))
+])
 
 @app.route('/')
 def root() -> str: return 'Mocked Beaster! :)'
@@ -65,9 +66,9 @@ def get_players(id) -> list[Player]:
     return Response(serialized_players, status=200, mimetype='application/json')
 
 @app.route('/game/<id>/result', methods=['GET'])
-def get_result(id) -> list[Winner]:
-    serialized_winner_list = PlayerSerializer.serialize_list(MOCKED_WINNER_LIST)
-    return Response(serialized_winner_list, status=200, mimetype='application/json')
+def get_result(id) -> Result:
+    serialized_result = ResultSerializer.serialize(MOCKED_RESULT)
+    return Response(serialized_result, status=200, mimetype='application/json')
 
 @app.route('/game', methods=['POST'])
 def create_game() -> None:

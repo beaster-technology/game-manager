@@ -1,10 +1,11 @@
 from model.game import Game
 from model.player import Player
 from model.bet import Bet
-from model.winner import Winner
+from model.result import Result
 
 from serializer.game_serializer import GameSerializer
 from serializer.player_serializer import PlayerSerializer
+from serializer.result_serializer import ResultSerializer
 
 MOCKED_EPOCH = 1656681396.448879
 MOCKED_GAME_LIST = [
@@ -30,10 +31,10 @@ MOCKED_GAME_LIST = [
         open_at=MOCKED_EPOCH + 3600, # Born 1 hour after previous game
     ),
 ]
-MOCKED_WINNER_LIST = [ # Created at the moment their game closed
-    Winner('Tanan', Bet(50, MOCKED_EPOCH), '61be0f5f-a5c1-4e0a-92ef-686eac1e3699'),
-    Winner('Besca', Bet(35, MOCKED_EPOCH), '61be0f5f-a5c1-4e0a-92ef-686eac1e3699')
-]
+MOCKED_RESULT = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
+    Player('Tanan', Bet(50, MOCKED_EPOCH)),
+    Player('Besca', Bet(35, MOCKED_EPOCH))
+])
 
 class GameService:
 
@@ -61,14 +62,14 @@ class GameService:
 
         return PlayerSerializer.serialize_list(MOCKED_GAME_LIST[0].players)
 
-    def get_winners(id: str):
+    def get_result(id: str):
         # TODO: Validate UUID formatting - InvalidUUID
         
         # TODO: Search in repository and raise unhandled exceptions - Exception
 
         # Check game existance from repo and check for it here - NotFoundException
 
-        return PlayerSerializer.serialize_list(MOCKED_WINNER_LIST)
+        return ResultSerializer.serialize(MOCKED_RESULT)
 
     def create_game(request):
 

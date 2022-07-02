@@ -40,9 +40,9 @@ def get_players(id):
 
     return Response(response, status=200, mimetype='application/json')
 
-@beaster_game_api.route('/game/<id>/winner', methods=['GET'])
+@beaster_game_api.route('/game/<id>/result', methods=['GET'])
 def get_result(id):
-    try: response = GameService.get_winners(id)
+    try: response = GameService.get_result(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:

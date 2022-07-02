@@ -18,10 +18,12 @@ from model.exceptions.invalid_request_payload import InvalidRequestPayload
 
 class GameService:
 
+    @staticmethod
     def list_games(open_only: bool=True):
         games: list[Game] = GamesDAO.list(open_only)
         return GameSerializer.serialize_list(games)
 
+    @staticmethod
     def get_game(id: str):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
@@ -31,6 +33,7 @@ class GameService:
 
         return GameSerializer.serialize(game)
 
+    @staticmethod
     def get_players(id: str):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
@@ -40,6 +43,7 @@ class GameService:
 
         return PlayerSerializer.serialize_list(players)
 
+    @staticmethod
     def create_game(request):
 
         # Validate body
@@ -51,12 +55,14 @@ class GameService:
 
         return GameSerializer.serialize(game)
 
+    @staticmethod
     def close_game(id):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
         GamesDAO.close(id)
 
+    @staticmethod
     def update_game(id, request):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
@@ -68,6 +74,7 @@ class GameService:
 
         GamesDAO.update(game_update)
 
+    @staticmethod
     def update_players(id, request):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
@@ -79,6 +86,7 @@ class GameService:
 
         PlayersDAO.update(game_update)
 
+    @staticmethod
     def delete_game(id):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID

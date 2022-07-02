@@ -9,6 +9,8 @@ from model.exceptions.invalid_uuid import InvalidUUID
 from model.exceptions.resource_not_found import ResourceNotFound
 
 class ResultService:
+    
+    @staticmethod
     def get_result(id: str):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
@@ -18,6 +20,7 @@ class ResultService:
 
         return ResultSerializer.serialize(result)
 
+    @staticmethod
     def delete_result(id: str):
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID

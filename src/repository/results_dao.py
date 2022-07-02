@@ -14,6 +14,7 @@ class ResultsDAO: # This guy needs to connect to firebase firestore
         # Here you can initialize the connection
         pass
 
+    @staticmethod
     def retrieve(id: str):
         # Retrieve targeted result
         target_result: Result = deepcopy(MOCKED_RESULT)
@@ -21,6 +22,7 @@ class ResultsDAO: # This guy needs to connect to firebase firestore
         
         return target_result
 
+    @staticmethod
     def delete(id: str):
         # Delete game result with provided ID
         pass

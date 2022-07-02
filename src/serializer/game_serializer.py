@@ -5,6 +5,7 @@ from model.game import Game
 
 class GameSerializer:
 
+    @staticmethod
     def serialize(game: Game):
         serialized_game: str = deepcopy(game)
         for player in serialized_game.players: player.bet = vars(player.bet)
@@ -12,6 +13,7 @@ class GameSerializer:
         serialized_game.players = [vars(player) for player in serialized_game.players]
         return dumps(vars(serialized_game))
 
+    @staticmethod
     def serialize_list(games: list[Game]):
         serialized_games_list: list[str] = deepcopy(games)
         for game in serialized_games_list:

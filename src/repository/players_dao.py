@@ -17,10 +17,12 @@ class PlayersDAO: # This guy needs to connect to firebase firestore
         # Here you can initialize the connection
         pass
 
+    @staticmethod
     def retrieve(id: str):
         # Retrieve players with id
         return MOCKED_PLAYER_LIST
 
+    @staticmethod
     def update(game: Game):
         # Update provided game in firestore
         pass

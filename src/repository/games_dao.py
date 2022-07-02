@@ -35,10 +35,12 @@ class GamesDAO: # This guy needs to connect to firebase firestore
         # Here you can initialize the connection
         pass
 
+    @staticmethod
     def list(open_only: bool = True):
         # Retrieve all games
         return MOCKED_GAME_LIST
 
+    @staticmethod
     def retrieve(id: str):
         # Retrieve game with id
         target_game: Game = deepcopy(MOCKED_GAME_LIST[0])
@@ -46,18 +48,22 @@ class GamesDAO: # This guy needs to connect to firebase firestore
 
         return target_game
 
+    @staticmethod
     def insert(game: Game):
         # Insert provided game in firestore
         pass
 
+    @staticmethod
     def update(game: Game):
         # Update provided game in firestore
         pass
 
+    @staticmethod
     def delete(id: str):
         # Delete game result with provided ID
         pass
 
+    @staticmethod
     def close(id: str):
         # Close game with provided ID - set is_open to False
         pass

@@ -10,20 +10,20 @@ MOCKED_GAME_LIST = [
     Game(
         teams=(Competitor('Colombia', 2), Competitor('England', 3)),
         players=[
-            Player('Tanga', Bet(10, MOCKED_EPOCH)),         # Born along its game
-            Player('Beni', Bet(10, MOCKED_EPOCH + 180)),    # Born 3 minutes after its game was created
-            Player('Lusca', Bet(10, MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
-            Player('Tchan', Bet(10, MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
+            Player('Tanga', Bet(12.1, 'Colombia', MOCKED_EPOCH)),        # Born along its game
+            Player('Beni', Bet(0.2, 'Colombia', MOCKED_EPOCH + 180)),   # Born 3 minutes after its game was created
+            Player('Lusca', Bet(10.3, 'England', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
+            Player('Tchan', Bet(23.8, 'England', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
         ],
         open_at=MOCKED_EPOCH,
     ),
     Game(
         teams=(Competitor('Japan'), Competitor('Mexico')),
         players=[
-            Player('Lusni', Bet(10, MOCKED_EPOCH + 3600 + 600)),    # Born 10 minutes after its game was created
-            Player('Tchanga', Bet(10, MOCKED_EPOCH + 3600)),        # Born along its game
-            Player('Besca', Bet(10, MOCKED_EPOCH + 3600 + 120)),    # Born 2 minutes after its game was created
-            Player('Tanan', Bet(10, MOCKED_EPOCH + 3600 + 180))     # Born 3 minutes after its game was created
+            Player('Lusni', Bet(28.4, 'Mexico', MOCKED_EPOCH + 3600 + 600)),   # Born 10 minutes after its game was created
+            Player('Tchanga', Bet(42.0, 'Japan', MOCKED_EPOCH + 3600)),        # Born along its game
+            Player('Besca', Bet(50.0, 'Japan', MOCKED_EPOCH + 3600 + 120)),    # Born 2 minutes after its game was created
+            Player('Tanan', Bet(75.3, 'Mexico', MOCKED_EPOCH + 3600 + 180))    # Born 3 minutes after its game was created
         ],
         unit='Bandecos',
         open_at=MOCKED_EPOCH + 3600, # Born 1 hour after previous game

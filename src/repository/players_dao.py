@@ -6,10 +6,10 @@ from model.bet import Bet
 
 MOCKED_EPOCH = 1656681396.448879
 MOCKED_PLAYER_LIST = [
-    Player('Tanga', Bet(10, MOCKED_EPOCH)),         # Born along its game
-    Player('Beni', Bet(10, MOCKED_EPOCH + 180)),    # Born 3 minutes after its game was created
-    Player('Lusca', Bet(10, MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
-    Player('Tchan', Bet(10, MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
+    Player('Tanga', Bet(10, 'Brazil', MOCKED_EPOCH)),         # Born along its game
+    Player('Beni', Bet(10, 'Brazil', MOCKED_EPOCH + 180)),    # Born 3 minutes after its game was created
+    Player('Lusca', Bet(10, 'Brazil', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
+    Player('Tchan', Bet(10, 'Brazil', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
 ]
 
 class PlayersDAO: # This guy needs to connect to firebase firestore

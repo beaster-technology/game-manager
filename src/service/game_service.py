@@ -1,5 +1,8 @@
+from collections import namedtuple
+from json import loads
 from uuid import UUID
 from model.game import Game
+from model.competitor import Competitor
 from model.player import Player
 from model.bet import Bet
 
@@ -42,7 +45,7 @@ class GameService:
         # Validate body
 
         # Generate game creation class
-        game = Game(('Brasil', 'Espanha'), [])
+        game = Game((Competitor('Brasil'), Competitor('Espanha')), [])
 
         GamesDAO.insert(game)
 
@@ -61,7 +64,7 @@ class GameService:
         # Validate game update payload
 
         # Build game object
-        game_update = Game(('Brasil', 'Espanha'), [])
+        game_update = Game(('Brazil', 'Spain'), [])
 
         GamesDAO.update(game_update)
 

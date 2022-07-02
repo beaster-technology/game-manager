@@ -55,7 +55,7 @@ def get_result(id):
 
 @beaster_game_api.route('/game', methods=['POST'])
 def create_game():
-    try: response = GameService.create_game(request.values)
+    try: response = GameService.create_game(request.json)
     except InvalidRequestPayload as error_message:
         return Response(f'Invalid creation request payload.', status=400)
     except Exception as error_message:
@@ -70,8 +70,6 @@ def close_game(id):
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
         return Response(f'Game with id {id} not found.', status=404)
-    except AlreadyClosedGame:
-        return Response(f'Game with id {id} is already closed.', status=400)
     except Exception as error_message:
         return Response(f'Unable to close game: {error_message}.', status=500)
 
@@ -79,7 +77,7 @@ def close_game(id):
 
 @beaster_game_api.route('/game/<id>', methods=['PUT'])
 def update_game(id):
-    try: GameService.update_game(id, request.values)
+    try: GameService.update_game(id, request.json)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except InvalidRequestPayload:
@@ -93,7 +91,7 @@ def update_game(id):
 
 @beaster_game_api.route('/game/<id>/player', methods=['PUT'])
 def update_players(id) -> None:
-    try: GameService.update_players(id, request.values)
+    try: GameService.update_players(id, request.json)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except InvalidRequestPayload:

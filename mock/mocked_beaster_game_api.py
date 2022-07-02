@@ -5,6 +5,7 @@ from sys import path
 
 path.append('../src')
 from model.game import Game
+from model.competitor import Competitor
 from model.player import Player
 from model.bet import Bet
 from model.result import Result
@@ -18,7 +19,7 @@ app = Flask(__name__)
 MOCKED_EPOCH = 1656681396.448879
 MOCKED_GAME_LIST = [
     Game(
-        teams=('Brasil', 'França'),
+        teams=(Competitor('Brazil'), Competitor('France')),
         players=[
             Player('Tanga', Bet(10, MOCKED_EPOCH)),         # Born along its game
             Player('Beni', Bet(10, MOCKED_EPOCH + 180)),    # Born 3 minutes after its game was created
@@ -28,7 +29,7 @@ MOCKED_GAME_LIST = [
         open_at=MOCKED_EPOCH,
     ),
     Game(
-        teams=('Argentina', 'Itália'),
+        teams=(Competitor('Italy', 3), Competitor('Germany', 1)),
         players=[
             Player('Lusni', Bet(10, MOCKED_EPOCH + 3600 + 600)),    # Born 10 minutes after its game was created
             Player('Tchanga', Bet(10, MOCKED_EPOCH + 3600)),        # Born along its game
@@ -42,7 +43,7 @@ MOCKED_GAME_LIST = [
 MOCKED_RESULT = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
     Player('Tanan', Bet(50, MOCKED_EPOCH)),
     Player('Besca', Bet(35, MOCKED_EPOCH))
-])
+], 'Brazil')
 
 @app.route('/')
 def root() -> str: return 'Mocked Beaster! :)'

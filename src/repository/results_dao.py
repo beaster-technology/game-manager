@@ -7,7 +7,7 @@ MOCKED_EPOCH = 1656681396.448879
 MOCKED_RESULT = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
     Player('Tanan', Bet(50, MOCKED_EPOCH)),
     Player('Besca', Bet(35, MOCKED_EPOCH))
-])
+], 'Brazil')
 
 class ResultsDAO: # This guy needs to connect to firebase firestore
     def __init__(self) -> None:

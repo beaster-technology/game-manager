@@ -1,13 +1,14 @@
 from copy import deepcopy
 
 from model.game import Game
+from model.competitor import Competitor
 from model.player import Player
 from model.bet import Bet
 
 MOCKED_EPOCH = 1656681396.448879
 MOCKED_GAME_LIST = [
     Game(
-        teams=('Brasil', 'França'),
+        teams=(Competitor('Colombia', 2), Competitor('England', 3)),
         players=[
             Player('Tanga', Bet(10, MOCKED_EPOCH)),         # Born along its game
             Player('Beni', Bet(10, MOCKED_EPOCH + 180)),    # Born 3 minutes after its game was created
@@ -17,7 +18,7 @@ MOCKED_GAME_LIST = [
         open_at=MOCKED_EPOCH,
     ),
     Game(
-        teams=('Argentina', 'Itália'),
+        teams=(Competitor('Japan'), Competitor('Mexico')),
         players=[
             Player('Lusni', Bet(10, MOCKED_EPOCH + 3600 + 600)),    # Born 10 minutes after its game was created
             Player('Tchanga', Bet(10, MOCKED_EPOCH + 3600)),        # Born along its game

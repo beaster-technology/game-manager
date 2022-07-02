@@ -2,11 +2,12 @@ from time import time
 from uuid import uuid4
 
 from model.player import Player
+from model.competitor import Competitor
 
 class Game:
     def __init__(
         self,
-        teams: tuple[str, str],
+        teams: tuple[Competitor, Competitor],
         players: list[Player],
         unit: str = 'Beastcoins',
         id: str = None,

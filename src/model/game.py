@@ -9,13 +9,13 @@ class Game:
         teams: tuple[str, str],
         players: list[Player],
         unit: str = 'Beastcoins',
-        id: str = str(uuid4()),
-        open_at: float = time(),
+        id: str = None,
+        open_at: float = None,
         is_open: bool = True
     ) -> None:
-        self.id = id
+        self.id = id if id else str(uuid4())
+        self.open_at = open_at if open_at else time()
         self.teams = teams
         self.players = players
         self.unit = unit
-        self.open_at = open_at
         self.is_open = is_open

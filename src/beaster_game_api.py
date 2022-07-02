@@ -3,10 +3,11 @@ from flask import Flask, request, Response
 beaster_game_api = Flask(__name__)
 
 from service.game_service import GameService
+from service.result_service import ResultService
+
 from model.exceptions.invalid_uuid import InvalidUUID
 from model.exceptions.resource_not_found import ResourceNotFound
 from model.exceptions.invalid_request_payload import InvalidRequestPayload
-from model.exceptions.already_closed_game import AlreadyClosedGame
 
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games():
@@ -42,7 +43,7 @@ def get_players(id):
 
 @beaster_game_api.route('/game/<id>/result', methods=['GET'])
 def get_result(id):
-    try: response = GameService.get_result(id)
+    try: response = ResultService.get_result(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
@@ -109,10 +110,17 @@ def delete_game(id) -> None:
     try: GameService.delete_game(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
-    except ResourceNotFound:
-        return Response(f'Game with id {id} not found.', status=404)
     except Exception as error_message:
         return Response(f'Unable to delete game: {error_message}.', status=500)
 
     return Response(status=204)
 
+@beaster_game_api.route('/game/<id>/result', methods=['DELETE'])
+def delete_result(id) -> None:
+    try: ResultService.delete_result(id)
+    except InvalidUUID:
+        return Response(f'Invalid UUID passed as parameter.', status=400)
+    except Exception as error_message:
+        return Response(f'Unable to delete result: {error_message}.', status=500)
+
+    return Response(status=204)

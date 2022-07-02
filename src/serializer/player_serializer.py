@@ -1,7 +1,7 @@
 from copy import deepcopy
 from json import dumps
 
-from player import Player
+from model.player import Player
 
 class PlayerSerializer:
 

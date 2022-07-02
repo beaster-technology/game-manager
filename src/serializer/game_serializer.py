@@ -1,7 +1,7 @@
 from copy import deepcopy
 from json import dumps
 
-from game import Game
+from model.game import Game
 
 class GameSerializer:
 

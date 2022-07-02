@@ -5,11 +5,11 @@ build:
 	Python3 -m pip install Flask
 
 execute:
-	export FLASK_APP=game_api.py; cd ./src/controller; flask run --port=8080
+	export FLASK_APP=beaster_game_api.py; cd src; flask run --port=8080
 
 run: build execute
 
 execute-mock:
-	export FLASK_APP=mocked_game_api.py; cd ./mock; flask run --port=8080
+	export FLASK_APP=mocked_beaster_game_api.py; cd mock; flask run --port=8080
 
 mock: build execute-mock

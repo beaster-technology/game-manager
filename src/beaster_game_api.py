@@ -29,18 +29,6 @@ def get_game(id):
 
     return Response(response, status=200, mimetype='application/json')
 
-@beaster_game_api.route('/game/<id>/player', methods=['GET'])
-def get_players(id):
-    try: response = GameService.get_players(id)
-    except InvalidUUID:
-        return Response(f'Invalid UUID passed as parameter.', status=400)
-    except ResourceNotFound:
-        return Response(f'Game with id {id} not found.', status=404)
-    except Exception as error_message:
-        return Response(f'Unable to retrieve players: {error_message}.', status=500)
-
-    return Response(response, status=200, mimetype='application/json')
-
 @beaster_game_api.route('/game/<id>/result', methods=['GET'])
 def get_result(id):
     try: response = ResultService.get_result(id)
@@ -49,7 +37,7 @@ def get_result(id):
     except ResourceNotFound:
         return Response(f'Game with id {id} not found.', status=404)
     except Exception as error_message:
-        return Response(f'Unable to retrieve players: {error_message}.', status=500)
+        return Response(f'Unable to retrieve results: {error_message}.', status=500)
 
     return Response(response, status=200, mimetype='application/json')
 
@@ -57,7 +45,7 @@ def get_result(id):
 def create_game():
     try: response = GameService.create_game(request.json)
     except InvalidRequestPayload as error_message:
-        return Response(f'Invalid creation request payload.', status=400)
+        return Response(f'Invalid creation request payload: {error_message}', status=400)
     except Exception as error_message:
         return Response(f'Unable to create game: {error_message}.', status=500)
 
@@ -86,20 +74,6 @@ def update_game(id):
         return Response(f'Game with id {id} not found.', status=404)
     except Exception as error_message:
         return Response(f'Unable to update game: {error_message}.', status=500)
-
-    return Response(status=204)
-
-@beaster_game_api.route('/game/<id>/player', methods=['PUT'])
-def update_players(id) -> None:
-    try: GameService.update_players(id, request.json)
-    except InvalidUUID:
-        return Response(f'Invalid UUID passed as parameter.', status=400)
-    except InvalidRequestPayload:
-        return Response(f'Invalid players update request payload.', status=400)
-    except ResourceNotFound:
-        return Response(f'Game with id {id} not found.', status=404)
-    except Exception as error_message:
-        return Response(f'Unable to update players: {error_message}.', status=500)
 
     return Response(status=204)
 

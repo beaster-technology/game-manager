@@ -61,11 +61,6 @@ def get_game(id) -> Game:
     serialized_game = GameSerializer.serialize(mocked_game)
     return Response(serialized_game, status=200, mimetype='application/json')
 
-@app.route('/game/<id>/player', methods=['GET'])
-def get_players(id) -> list[Player]:
-    serialized_players = PlayerSerializer.serialize_list(MOCKED_GAME_LIST[0].players)
-    return Response(serialized_players, status=200, mimetype='application/json')
-
 @app.route('/game/<id>/result', methods=['GET'])
 def get_result(id) -> Result:
     serialized_result = ResultSerializer.serialize(MOCKED_RESULT)
@@ -82,10 +77,6 @@ def close_game(id) -> None:
 
 @app.route('/game/<id>', methods=['PUT'])
 def update_game(id) -> None:
-    return Response(status=204, mimetype='application/json')
-
-@app.route('/game/<id>/players', methods=['PUT'])
-def update_players(id) -> None:
     return Response(status=204, mimetype='application/json')
 
 @app.route('/game/<id>', methods=['DELETE'])

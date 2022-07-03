@@ -13,7 +13,7 @@ from serializer.result_serializer import ResultSerializer
 class ResultService:
     
     @staticmethod
-    def get(id: str):
+    def get(id: str) -> str:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
         
@@ -23,11 +23,11 @@ class ResultService:
         return ResultSerializer.serialize(result)
 
     @staticmethod
-    def insert(game: Game):
+    def insert(game: Game) -> str:
         ResultsDAO.insert(game)
 
     @staticmethod
-    def delete(id: str):
+    def delete(id: str) -> str:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
         

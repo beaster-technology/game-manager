@@ -14,9 +14,9 @@ class Game:
         open_at: float = None,
         is_open: bool = True
     ) -> None:
-        self.id = id if id else str(uuid4())
-        self.open_at = open_at if open_at else time()
-        self.teams = teams
-        self.players = players
-        self.unit = unit
-        self.is_open = is_open
+        self.id: str = id if id else str(uuid4())
+        self.open_at: float = open_at if open_at else time()
+        self.teams: tuple[Competitor, Competitor] = teams
+        self.players: list[Player] = players
+        self.unit: str = unit
+        self.is_open: bool = is_open

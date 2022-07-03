@@ -23,8 +23,8 @@ class GameValidator:
         if any([ player.name == '' for player in game.players ]):
             raise InvalidRequestPayload("one or more players are unnamed")
 
-        team_names = [ competitor.name for competitor in game.teams ]
-        bet_targets = [ player.bet.target for player in game.players ]
+        team_names: list[str] = [ competitor.name for competitor in game.teams ]
+        bet_targets: list[str] = [ player.bet.target for player in game.players ]
         if any([ not bet_target in team_names for bet_target in bet_targets ]):
             raise InvalidRequestPayload("there are bets not targeting the competitors")
 

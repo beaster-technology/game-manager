@@ -3,7 +3,7 @@ from model.competitor import Competitor
 from model.player import Player
 from model.bet import Bet
 
-def to_game(request_body):
+def to_game(request_body) -> Game:
     return Game(
         teams=[
             Competitor(

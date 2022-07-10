@@ -1,6 +1,8 @@
 from flask import Flask, request, Response
+from flask_cors import CORS
 
 beaster_game_api = Flask(__name__)
+CORS(beaster_game_api, origins="http://localhost:3000/*")
 
 from service.game_service import GameService
 from service.result_service import ResultService

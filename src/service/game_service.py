@@ -1,3 +1,4 @@
+from typing import Union
 from uuid import UUID
 from operator import attrgetter
 
@@ -34,7 +35,7 @@ class GameService:
         return GameSerializer.serialize(game)
 
     @staticmethod
-    def create(request) -> str:
+    def create(request: dict[str, Union[str, float, int, bool]]) -> str:
         game: Game = to_game(request)
         GameValidator.validate(game)
 
@@ -42,7 +43,7 @@ class GameService:
         return GameSerializer.serialize(game)
 
     @staticmethod
-    def close(id) -> str:
+    def close(id: str) -> str:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
@@ -66,7 +67,7 @@ class GameService:
         GamesDAO.close(id)
 
     @staticmethod
-    def update(id, request) -> str:
+    def update(id: str, request: dict[str, Union[str, float, int, bool]]) -> str:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
@@ -76,7 +77,7 @@ class GameService:
         GamesDAO.update(game_update)
 
     @staticmethod
-    def delete(id) -> str:
+    def delete(id: str) -> str:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 

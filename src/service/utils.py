@@ -1,9 +1,11 @@
+from typing import Union
+
 from src.model.game import Game
 from src.model.competitor import Competitor
 from src.model.player import Player
 from src.model.bet import Bet
 
-def to_game(request_body) -> Game:
+def to_game(request_body: dict[str, Union[str, float, int, bool]]) -> Game:
     return Game(
         teams=[
             Competitor(

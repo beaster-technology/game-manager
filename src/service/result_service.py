@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from src.model.game import Game
 from src.model.result import Result
+from src.model.game import Game
 
 from src.model.exception.invalid_uuid import InvalidUUID
 from src.model.exception.resource_not_found import ResourceNotFound

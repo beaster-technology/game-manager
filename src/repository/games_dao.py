@@ -5,8 +5,8 @@ from src.model.competitor import Competitor
 from src.model.player import Player
 from src.model.bet import Bet
 
-MOCKED_EPOCH = 1656681396.448879
-MOCKED_GAME_LIST = [
+MOCKED_EPOCH: float = 1656681396.448879
+MOCKED_GAME_LIST: list[Game] = [
     Game(
         teams=(Competitor('Colombia', 2), Competitor('England', 3)),
         players=[

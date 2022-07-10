@@ -19,12 +19,12 @@ MOCKED_GAME: Game = Game(
 
 MOCKED_WINNER: str = 'Colombia'
 
-MOCKED_RESULT = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
+MOCKED_RESULT: Result = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
     Player('Tanan', Bet(50, 'Brazil')),
     Player('Besca', Bet(35, 'Brazil'))
 ], 'Brazil')
 
-MOCKED_GAME_LIST = [
+MOCKED_GAME_LIST: list[Game] = [
     Game(
         teams=(Competitor('Colombia', 2), Competitor('England', 3)),
         players=[

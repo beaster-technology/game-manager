@@ -6,7 +6,7 @@ build:
 	python3 -m pip install -U flask-cors
 
 test-all:
-	python -m unittest discover -s tests -p '*_test.py'
+	python3 -m unittest discover -s tests -p '*_test.py'
 
 execute:
 	export FLASK_APP=beaster_game_api.py; cd src; flask run --port=8080

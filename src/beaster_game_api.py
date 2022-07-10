@@ -20,7 +20,7 @@ def list_games() -> Response:
         return Response(f'Unable to retrieve game list: {error_message}', status=500)
 
 @beaster_game_api.route('/game/<id>', methods=['GET'])
-def get_game(id) -> Response:
+def get_game(id: str) -> Response:
     try: response: str = GameService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
@@ -32,7 +32,7 @@ def get_game(id) -> Response:
     return Response(response, status=200, mimetype='application/json')
 
 @beaster_game_api.route('/game/<id>/result', methods=['GET'])
-def get_result(id) -> Response:
+def get_result(id: str) -> Response:
     try: response: str = ResultService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
@@ -54,7 +54,7 @@ def create_game() -> Response:
     return Response(response, status=201, mimetype='application/json')
 
 @beaster_game_api.route('/game/<id>/close', methods=['POST'])
-def close_game(id) -> Response:
+def close_game(id: str) -> Response:
     try: GameService.close(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
@@ -66,7 +66,7 @@ def close_game(id) -> Response:
     return Response(status=204)
 
 @beaster_game_api.route('/game/<id>', methods=['PUT'])
-def update_game(id) -> Response:
+def update_game(id: str) -> Response:
     try: GameService.update(id, request.json)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
@@ -80,7 +80,7 @@ def update_game(id) -> Response:
     return Response(status=204)
 
 @beaster_game_api.route('/game/<id>', methods=['DELETE'])
-def delete_game(id) -> Response:
+def delete_game(id: str) -> Response:
     try: GameService.delete(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
@@ -90,7 +90,7 @@ def delete_game(id) -> Response:
     return Response(status=204)
 
 @beaster_game_api.route('/game/<id>/result', methods=['DELETE'])
-def delete_result(id) -> Response:
+def delete_result(id: str) -> Response:
     try: ResultService.delete(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)

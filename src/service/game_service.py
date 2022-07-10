@@ -1,17 +1,20 @@
 from uuid import UUID
+from operator import attrgetter
 
 from model.game import Game
+from model.player import Player
 
 from service.utils import to_game
 
 from model.exceptions.invalid_uuid import InvalidUUID
 from model.exceptions.resource_not_found import ResourceNotFound
 
+from validator.game_validator import GameValidator
+from serializer.game_serializer import GameSerializer
 from repository.games_dao import GamesDAO
 
-from validator.game_validator import GameValidator
-
-from serializer.game_serializer import GameSerializer
+from service.result_service import ResultService
+from calculator.pot_splitter import PotSplitter
 
 class GameService:
 
@@ -43,20 +46,18 @@ class GameService:
         try: _ = UUID(id, version=4)
         except ValueError: raise InvalidUUID
 
-        '''
-        Here you need to determine the winners
-        and split the absolute pot within them
+        target_game: Game = GamesDAO.retrieve(id)
+        champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
 
-        you can write the calculation at pot_splitter.py
-        and use it here - this way we decouple the calculation
-        from the game service
-
-        here you will also need to build a Result object and
-        post it in the results collection at firestore.
-        to do it you can use insert() method of ResultService :)
-
-        good luck!
-        '''
+        distribution: list[Player] = PotSplitter.calculate_pot_distribution(target_game.players, champion_name)
+        ResultService.insert(Game(
+            teams=target_game.teams,
+            players=distribution,
+            unit=target_game.unit,
+            id=target_game.id,
+            open_at=target_game.open_at,
+            is_open=False
+        ))
 
         GamesDAO.close(id)
 

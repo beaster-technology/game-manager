@@ -8,12 +8,12 @@ from model.bet import Bet
 MOCKED_EPOCH = 1656681396.448879
 MOCKED_GAME_LIST = [
     Game(
-        teams=(Competitor('Colombia', 2), Competitor('England', 3)),
+        teams=(Competitor('Colombia', 7), Competitor('England', 3)),
         players=[
-            Player('Tanga', Bet(12.1, 'Colombia', MOCKED_EPOCH)),        # Born along its game
-            Player('Beni', Bet(0.2, 'Colombia', MOCKED_EPOCH + 180)),   # Born 3 minutes after its game was created
-            Player('Lusca', Bet(10.3, 'England', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
-            Player('Tchan', Bet(23.8, 'England', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
+            Player('Tanga', Bet(7, 'Colombia', MOCKED_EPOCH)),        # Born along its game
+            Player('Beni', Bet(3, 'Colombia', MOCKED_EPOCH + 180)),   # Born 3 minutes after its game was created
+            Player('Lusca', Bet(67.45, 'England', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
+            Player('Tchan', Bet(22.55, 'England', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
         ],
         open_at=MOCKED_EPOCH,
     ),

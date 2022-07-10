@@ -1,8 +1,8 @@
 from uuid import UUID
-from model.game import Game
+from src.model.game import Game
 
-from model.exceptions.invalid_request_payload import InvalidRequestPayload
-from model.exceptions.invalid_uuid import InvalidUUID
+from src.model.exception.invalid_request_payload import InvalidRequestPayload
+from src.model.exception.invalid_uuid import InvalidUUID
 
 class GameValidator:
 

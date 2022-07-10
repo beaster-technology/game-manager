@@ -1,7 +1,7 @@
-from model.game import Game
-from model.competitor import Competitor
-from model.player import Player
-from model.bet import Bet
+from src.model.game import Game
+from src.model.competitor import Competitor
+from src.model.player import Player
+from src.model.bet import Bet
 
 def to_game(request_body) -> Game:
     return Game(

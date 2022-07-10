@@ -4,12 +4,12 @@ from flask_cors import CORS
 beaster_game_api = Flask(__name__)
 CORS(beaster_game_api, origins="http://localhost:3000/*")
 
-from service.game_service import GameService
-from service.result_service import ResultService
+from src.service.game_service import GameService
+from src.service.result_service import ResultService
 
-from model.exceptions.invalid_uuid import InvalidUUID
-from model.exceptions.resource_not_found import ResourceNotFound
-from model.exceptions.invalid_request_payload import InvalidRequestPayload
+from src.model.exception.invalid_uuid import InvalidUUID
+from src.model.exception.resource_not_found import ResourceNotFound
+from src.model.exception.invalid_request_payload import InvalidRequestPayload
 
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games() -> Response:

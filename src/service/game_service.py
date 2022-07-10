@@ -1,20 +1,20 @@
 from uuid import UUID
 from operator import attrgetter
 
-from model.game import Game
-from model.player import Player
+from src.model.game import Game
+from src.model.player import Player
 
-from service.utils import to_game
+from src.service.utils import to_game
 
-from model.exceptions.invalid_uuid import InvalidUUID
-from model.exceptions.resource_not_found import ResourceNotFound
+from src.model.exception.invalid_uuid import InvalidUUID
+from src.model.exception.resource_not_found import ResourceNotFound
 
-from validator.game_validator import GameValidator
-from serializer.game_serializer import GameSerializer
-from repository.games_dao import GamesDAO
+from src.validator.game_validator import GameValidator
+from src.serializer.game_serializer import GameSerializer
+from src.repository.games_dao import GamesDAO
 
-from service.result_service import ResultService
-from calculator.pot_splitter import PotSplitter
+from src.service.result_service import ResultService
+from src.calculator.pot_splitter import PotSplitter
 
 class GameService:
 
@@ -49,7 +49,11 @@ class GameService:
         target_game: Game = GamesDAO.retrieve(id)
         champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
 
-        distribution: list[Player] = PotSplitter.calculate_pot_distribution(target_game.players, champion_name)
+        distribution: list[Player] = PotSplitter.calculate_pot_distribution(
+            target_game.players,
+            champion_name
+        )
+        
         ResultService.insert(Game(
             teams=target_game.teams,
             players=distribution,

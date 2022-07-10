@@ -1,4 +1,4 @@
-from model.bet import Bet
+from src.model.bet import Bet
 
 class Player:
     def __init__(self, name: str, bet: Bet) -> None:

@@ -4,14 +4,14 @@ from json import dumps
 from sys import path
 
 path.append('../src')
-from model.game import Game
-from model.competitor import Competitor
-from model.player import Player
-from model.bet import Bet
-from model.result import Result
+from src.model.game import Game
+from src.model.competitor import Competitor
+from src.model.player import Player
+from src.model.bet import Bet
+from src.model.result import Result
 
-from serializer.game_serializer import GameSerializer
-from serializer.result_serializer import ResultSerializer
+from src.serializer.game_serializer import GameSerializer
+from src.serializer.result_serializer import ResultSerializer
 
 app = Flask(__name__)
 

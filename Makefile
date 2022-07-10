@@ -11,7 +11,7 @@ test-all:
 execute:
 	export FLASK_APP=beaster_game_api.py; cd src; flask run --port=8080
 
-run: build execute
+run: build test-all execute
 
 execute-mock:
 	export FLASK_APP=mocked_beaster_game_api.py; cd mock; flask run --port=8080

@@ -4,6 +4,7 @@ from src.model.game import Game
 from src.model.result import Result
 from src.model.player import Player
 from src.model.bet import Bet
+from google.cloud import firestore
 
 MOCKED_EPOCH: float = 1656681396.448879
 MOCKED_RESULT: list[Game] = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
@@ -13,23 +14,17 @@ MOCKED_RESULT: list[Game] = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
 
 class ResultsDAO: # This guy needs to connect to firebase firestore
     def __init__(self) -> None:
-        # Here you can initialize the connection
-        pass
+        # Set variable type from collection return type
+        self.results_collection = firestore \
+            .Client(project = 'beaster-f041b') \
+            .collection(u'results')
 
-    @staticmethod
-    def retrieve(id: str) -> Result:
-        # Retrieve targeted result
-        target_result: Result = deepcopy(MOCKED_RESULT)
-        target_result.id = id
+    def retrieve(self, id: str) -> Result:
+        print(self.results_collection.document(id))
+
+    def insert(self, result: Result) -> None:
         
-        return target_result
-
-    @staticmethod
-    def insert(result: Result) -> None:
-        # Delete game result with provided ID
         pass
 
-    @staticmethod
     def delete(id: str) -> None:
-        # Delete game result with provided ID
         pass

@@ -43,7 +43,7 @@ MOCKED_GAME_LIST: list[Game] = [
 
 MOCKED_RESULT: Result = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
     Player('Tanan', Bet(50, MOCKED_EPOCH)),
-    Player('Besca', Bet(35, MOCKED_EPOCH))
+    Player('Besca', Bet(35, MOCKED_EPOCH - 90))
 ], 'Brazil')
 
 @app.route('/')
@@ -74,7 +74,7 @@ def create_game() -> Response:
 
 @app.route('/game/<id>/close', methods=['POST'])
 def close_game(id) -> Response:
-    return Response(status=204, mimetype='application/json')
+    return Response(MOCKED_RESULT, status=200, mimetype='application/json')
 
 @app.route('/game/<id>', methods=['PUT'])
 def update_game(id) -> Response:

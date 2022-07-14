@@ -23,8 +23,8 @@ class ResultService:
         return ResultSerializer.serialize(result)
 
     @staticmethod
-    def insert(game: Game) -> str:
-        ResultsDAO.insert(game)
+    def insert(result: Result) -> str:
+        ResultsDAO.insert(result)
 
     @staticmethod
     def delete(id: str) -> str:

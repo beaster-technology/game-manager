@@ -3,6 +3,7 @@ from uuid import UUID
 from operator import attrgetter
 
 from src.model.game import Game
+from src.model.result import Result
 from src.model.player import Player
 
 from src.service.utils import to_game
@@ -48,23 +49,25 @@ class GameService:
         except ValueError: raise InvalidUUID
 
         target_game: Game = GamesDAO.retrieve(id)
+        if not target_game: raise ResourceNotFound
+
         champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
 
         distribution: list[Player] = PotSplitter.calculate_pot_distribution(
             target_game.players,
             champion_name
         )
-        
-        ResultService.insert(Game(
-            teams=target_game.teams,
-            players=distribution,
-            unit=target_game.unit,
-            id=target_game.id,
-            open_at=target_game.open_at,
-            is_open=False
-        ))
 
+        game_result: Result = Result(
+            id=target_game.id,
+            winners=distribution,
+            champion=champion_name
+        ) 
+        
+        ResultService.insert(game_result)
         GamesDAO.close(id)
+
+        return game_result
 
     @staticmethod
     def update(id: str, request: dict[str, Union[str, float, int, bool]]) -> str:

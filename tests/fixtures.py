@@ -1,11 +1,29 @@
-from copy import deepcopy
-
 from src.model.game import Game
+from src.model.result import Result
 from src.model.competitor import Competitor
 from src.model.player import Player
 from src.model.bet import Bet
 
 MOCKED_EPOCH: float = 1656681396.448879
+
+MOCKED_GAME: Game = Game(
+    teams=(Competitor('Colombia', 7), Competitor('England', 3)),
+    players=[
+        Player('Tanga', Bet(7, 'Colombia', MOCKED_EPOCH)),        # Born along its game
+        Player('Beni', Bet(3, 'Colombia', MOCKED_EPOCH + 180)),   # Born 3 minutes after its game was created
+        Player('Lusca', Bet(67.45, 'England', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
+        Player('Tchan', Bet(22.55, 'England', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
+    ],
+    open_at=MOCKED_EPOCH,
+)
+
+MOCKED_WINNER: str = 'Colombia'
+
+MOCKED_RESULT: Result = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
+    Player('Tanan', Bet(50, 'Brazil')),
+    Player('Besca', Bet(35, 'Brazil'))
+], 'Brazil')
+
 MOCKED_GAME_LIST: list[Game] = [
     Game(
         teams=(Competitor('Colombia', 2), Competitor('England', 3)),
@@ -29,41 +47,3 @@ MOCKED_GAME_LIST: list[Game] = [
         open_at=MOCKED_EPOCH + 3600, # Born 1 hour after previous game
     ),
 ]
-
-class GamesDAO: # This guy needs to connect to firebase firestore
-    def __init__(self) -> None:
-        # Here you can initialize the connection
-        pass
-
-    @staticmethod
-    def list(open_only: bool = True) -> list[Game]:
-        # Retrieve all games
-        return MOCKED_GAME_LIST
-
-    @staticmethod
-    def retrieve(id: str) -> Game:
-        # Retrieve game with id
-        target_game: Game = deepcopy(MOCKED_GAME_LIST[0])
-        target_game.id = id
-
-        return target_game
-
-    @staticmethod
-    def insert(game: Game) -> None:
-        # Insert provided game in firestore
-        pass
-
-    @staticmethod
-    def update(game: Game) -> None:
-        # Update provided game in firestore
-        pass
-
-    @staticmethod
-    def delete(id: str) -> None:
-        # Delete game result with provided ID
-        pass
-
-    @staticmethod
-    def close(id: str) -> None:
-        # Close game with provided ID - set is_open to False
-        pass

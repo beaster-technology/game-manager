@@ -1,14 +1,14 @@
 from uuid import UUID
 
-from model.game import Game
-from model.result import Result
+from src.model.result import Result
+from src.model.game import Game
 
-from model.exceptions.invalid_uuid import InvalidUUID
-from model.exceptions.resource_not_found import ResourceNotFound
+from src.model.exception.invalid_uuid import InvalidUUID
+from src.model.exception.resource_not_found import ResourceNotFound
 
-from repository.results_dao import ResultsDAO
+from src.repository.results_dao import ResultsDAO
 
-from serializer.result_serializer import ResultSerializer
+from src.serializer.result_serializer import ResultSerializer
 
 class ResultService:
     
@@ -23,8 +23,8 @@ class ResultService:
         return ResultSerializer.serialize(result)
 
     @staticmethod
-    def insert(game: Game) -> str:
-        ResultsDAO.insert(game)
+    def insert(result: Result) -> str:
+        ResultsDAO.insert(result)
 
     @staticmethod
     def delete(id: str) -> str:

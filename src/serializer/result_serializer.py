@@ -1,7 +1,7 @@
 from copy import deepcopy
 from json import dumps
 
-from model.result import Result
+from src.model.result import Result
 
 class ResultSerializer:
 

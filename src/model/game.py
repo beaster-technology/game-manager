@@ -1,8 +1,8 @@
 from time import time
 from uuid import uuid4
 
-from model.player import Player
-from model.competitor import Competitor
+from src.model.player import Player
+from src.model.competitor import Competitor
 
 class Game:
     def __init__(

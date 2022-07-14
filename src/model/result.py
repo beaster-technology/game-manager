@@ -1,4 +1,4 @@
-from model.player import Player
+from src.model.player import Player
 
 class Result:
     def __init__(self, id: str, winners: list[Player], champion: str) -> None:

@@ -55,7 +55,7 @@ def create_game() -> Response:
 
 @beaster_game_api.route('/game/<id>/close', methods=['POST'])
 def close_game(id: str) -> Response:
-    try: GameService.close(id)
+    try: response: str = GameService.close(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
@@ -63,7 +63,7 @@ def close_game(id: str) -> Response:
     except Exception as error_message:
         return Response(f'Unable to close game: {error_message}.', status=500)
 
-    return Response(status=204)
+    return Response(response, status=204, mimetype='application/json')
 
 @beaster_game_api.route('/game/<id>', methods=['PUT'])
 def update_game(id: str) -> Response:

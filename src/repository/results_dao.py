@@ -7,7 +7,7 @@ from src.model.player import Player
 from src.model.bet import Bet
 from google.cloud import firestore
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='/mnt/c/Users/henri/Meu Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f5e0e12c487.json'
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
 MOCKED_EPOCH: float = 1656681396.448879
 MOCKED_RESULT: list[Game] = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [

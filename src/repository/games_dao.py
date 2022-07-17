@@ -1,9 +1,15 @@
-from copy import deepcopy
+from locale import strcoll
+import os
+from this import d
 
+from jinja2 import TemplateRuntimeError
 from src.model.game import Game
 from src.model.competitor import Competitor
 from src.model.player import Player
 from src.model.bet import Bet
+from google.cloud import firestore
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
 MOCKED_EPOCH: float = 1656681396.448879
 MOCKED_GAME_LIST: list[Game] = [
@@ -30,23 +36,57 @@ MOCKED_GAME_LIST: list[Game] = [
     ),
 ]
 
+def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> Game:
+    id = document_ref.id
+    document: dict = document_ref.get().to_dict()
+    if not document: return None
+
+    teams = []
+    for team in document['teams'].items():
+        team_name: str = team[0]
+        team_goals: int = team[1]
+
+        teams.append(Competitor(team_name, team_goals))
+    
+    players = []
+    for player in document['players'].items():
+        player_name: str = player[0]
+        player_info: dict = player[1]
+
+        players.append(
+            Player(
+                player_name, 
+                Bet(player_info.get('value'), player_info.get('target'), player_info.get('created_at'))
+            )
+        )
+
+    return Game(
+      tuple(teams),
+      players,
+      document['unit'],
+      id,
+      document['created_at'],
+      document['is_open']
+    )
+  
 class GamesDAO: # This guy needs to connect to firebase firestore
-    def __init__(self) -> None:
-        # Here you can initialize the connection
-        pass
+    db = firestore.Client(project='beaster-f041b').collection('games')
 
     @staticmethod
     def list(open_only: bool = True) -> list[Game]:
-        # Retrieve all games
-        return MOCKED_GAME_LIST
+        document_list = GamesDAO.db.list_documents()
 
+        game_list = []
+        for doc in document_list:
+          game_list.append(create_game_from_document_ref(doc))
+
+        return game_list
+        
     @staticmethod
     def retrieve(id: str) -> Game:
-        # Retrieve game with id
-        target_game: Game = deepcopy(MOCKED_GAME_LIST[0])
-        target_game.id = id
+        document_reference = GamesDAO.db.document(id)
 
-        return target_game
+        return create_game_from_document_ref(document_reference)
 
     @staticmethod
     def insert(game: Game) -> None:

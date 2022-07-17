@@ -21,7 +21,9 @@ def list_games() -> Response:
 
 @beaster_game_api.route('/game/<id>', methods=['GET'])
 def get_game(id: str) -> Response:
-    try: response: str = GameService.get(id)
+    try: 
+        ResultService.get(id)
+        response: str = GameService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:

@@ -16,6 +16,8 @@ from src.serializer.game_serializer import GameSerializer
 from src.repository.games_dao import GamesDAO
 
 from src.service.result_service import ResultService
+from src.serializer.result_serializer import ResultSerializer
+
 from src.calculator.pot_splitter import PotSplitter
 
 class GameService:
@@ -67,7 +69,7 @@ class GameService:
         ResultService.insert(game_result)
         GamesDAO.close(id)
 
-        return game_result
+        return ResultSerializer.serialize(game_result)
 
     @staticmethod
     def update(id: str, request: dict[str, Union[str, float, int, bool]]) -> str:

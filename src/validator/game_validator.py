@@ -9,7 +9,7 @@ class GameValidator:
     @staticmethod
     def validate(game: Game):
 
-        if not game.id or not game.teams or not game.players or not game.unit:
+        if not game.id or not game.teams or not game.unit:
             raise InvalidRequestPayload("null fields")
 
         try: _ = UUID(game.id, version=4)

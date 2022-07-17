@@ -12,7 +12,7 @@ class PotSplitter:
             Player(
                 winner.name,
                 Bet(
-                    absolute_pot * (winner.bet.value / winners_pot),
+                    round(absolute_pot * (winner.bet.value / winners_pot), 2),
                     winner.bet.target,
                     winner.bet.created_at
                 )

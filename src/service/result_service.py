@@ -18,7 +18,7 @@ class ResultService:
         except ValueError: raise InvalidUUID
         
         result: Result = ResultsDAO.retrieve(id)
-        if result == '': raise ResourceNotFound
+        if result == None: raise ResourceNotFound
 
         return ResultSerializer.serialize(result)
 

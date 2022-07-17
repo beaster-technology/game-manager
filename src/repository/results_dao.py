@@ -23,7 +23,23 @@ class ResultsDAO: # This guy needs to connect to firebase firestore
         document = ResultsDAO.db.document(id).get()
         if not document: return None
 
-        print(document.to_dict())
+        winners = []
+        for winner in document.to_dict().get('winners').items():
+            winner_name: str = winner[0]
+            winner_info: dict = winner[1]
+
+            winners.append(
+                Player(
+                    winner_name, 
+                    Bet(winner_info.get('value'), winner_info.get('target'), winner_info.get('created_at'))
+                )
+            )
+
+        return Result(
+            id, 
+            winners, 
+            document.to_dict().get('champion')
+        )
       
     @staticmethod
     def insert(result: Result) -> None:

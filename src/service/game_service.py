@@ -79,7 +79,7 @@ class GameService:
         game_update: Game = to_game(request)
         GameValidator.validate(game_update)
 
-        GamesDAO.update(game_update)
+        GamesDAO.update(game_update, id)
 
     @staticmethod
     def delete(id: str) -> str:

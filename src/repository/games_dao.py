@@ -12,33 +12,7 @@ from google.cloud import firestore
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
-MOCKED_EPOCH: float = 1656681396.448879
-MOCKED_GAME_LIST: list[Game] = [
-    Game(
-        teams=(Competitor('Colombia', 2), Competitor('England', 3)),
-        players=[
-            Player('Tanga', Bet(12.1, 'Colombia', MOCKED_EPOCH)),        # Born along its game
-            Player('Beni', Bet(0.2, 'Colombia', MOCKED_EPOCH + 180)),   # Born 3 minutes after its game was created
-            Player('Lusca', Bet(10.3, 'England', MOCKED_EPOCH + 120)),   # Born 2 minutes after its game was created
-            Player('Tchan', Bet(23.8, 'England', MOCKED_EPOCH + 600))    # Born 10 minutes after its game was created
-        ],
-        open_at=MOCKED_EPOCH,
-    ),
-    Game(
-        teams=(Competitor('Japan'), Competitor('Mexico')),
-        players=[
-            Player('Lusni', Bet(28.4, 'Mexico', MOCKED_EPOCH + 3600 + 600)),   # Born 10 minutes after its game was created
-            Player('Tchanga', Bet(42.0, 'Japan', MOCKED_EPOCH + 3600)),        # Born along its game
-            Player('Besca', Bet(50.0, 'Japan', MOCKED_EPOCH + 3600 + 120)),    # Born 2 minutes after its game was created
-            Player('Tanan', Bet(75.3, 'Mexico', MOCKED_EPOCH + 3600 + 180))    # Born 3 minutes after its game was created
-        ],
-        unit='Bandecos',
-        open_at=MOCKED_EPOCH + 3600, # Born 1 hour after previous game
-    ),
-]
-
 def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> Game:
-    id = document_ref.id
     document: dict = document_ref.get().to_dict()
     if not document: return None
 
@@ -65,7 +39,7 @@ def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> 
       tuple(teams),
       players,
       document['unit'],
-      id,
+      document_ref.id,
       document['created_at'],
       document['is_open']
     )
@@ -122,7 +96,7 @@ class GamesDAO:
 
     @staticmethod
     def insert(game: Game) -> None:
-        document_reference = GamesDAO.db.document(game.id).get()
+        document_reference = GamesDAO.db.document(game.id)
 
         document_reference.set(format_game_to_store(game))
 

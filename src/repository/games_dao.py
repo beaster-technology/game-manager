@@ -1,5 +1,6 @@
 from locale import strcoll
 import os
+from platform import platform
 from this import d
 
 from jinja2 import TemplateRuntimeError
@@ -42,16 +43,16 @@ def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> 
     if not document: return None
 
     teams = []
-    for team in document['teams'].items():
-        team_name: str = team[0]
-        team_goals: int = team[1]
+    for team in document['teams']:
+        team_name: str = team['name']
+        team_goals: int = team['goals'] if 'goals' in team else None
 
         teams.append(Competitor(team_name, team_goals))
     
     players = []
-    for player in document['players'].items():
-        player_name: str = player[0]
-        player_info: dict = player[1]
+    for player in document['players']:
+        player_name: str = player['name']
+        player_info: dict = player['bet']
 
         players.append(
             Player(
@@ -68,8 +69,39 @@ def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> 
       document['created_at'],
       document['is_open']
     )
-  
-class GamesDAO: # This guy needs to connect to firebase firestore
+
+def format_game_to_store(game: Game) -> dict:
+    player_list = []
+    for player in game.players:
+        player_list.append(
+            { 
+              'name': player.name, 
+              'bet': {
+                'value': player.bet.value,
+                'target': player.bet.target,
+                'created_at': player.bet.created_at
+                }
+            }
+        )
+
+    team_list = [
+        {'name': game.teams[0].name}, 
+        {'name': game.teams[1].name}
+    ]
+
+    for i in range(2): 
+      if game.teams[i].goals != None: 
+        team_list[i]['goals'] = game.teams[i].goals
+
+    return {
+        'created_at': game.open_at,
+        'is_open': game.is_open,
+        'players': player_list,
+        'teams': team_list,
+        'unit': game.unit
+    }
+
+class GamesDAO:
     db = firestore.Client(project='beaster-f041b').collection('games')
 
     @staticmethod
@@ -84,26 +116,28 @@ class GamesDAO: # This guy needs to connect to firebase firestore
         
     @staticmethod
     def retrieve(id: str) -> Game:
-        document_reference = GamesDAO.db.document(id)
+        document_reference = GamesDAO.db.document(id).get()
 
         return create_game_from_document_ref(document_reference)
 
     @staticmethod
     def insert(game: Game) -> None:
-        # Insert provided game in firestore
-        pass
+        document_reference = GamesDAO.db.document(game.id).get()
+
+        document_reference.set(format_game_to_store(game))
 
     @staticmethod
-    def update(game: Game) -> None:
-        # Update provided game in firestore
-        pass
+    def update(game: Game, id: str) -> None:
+        document_reference = GamesDAO.db.document(id)
+
+        document_reference.update(format_game_to_store(game))
 
     @staticmethod
     def delete(id: str) -> None:
-        # Delete game result with provided ID
-        pass
+        GamesDAO.db.document(id).delete()
 
     @staticmethod
     def close(id: str) -> None:
-        # Close game with provided ID - set is_open to False
-        pass
+        document_reference = GamesDAO.db.document(id)
+
+        document_reference.update({'is_open': False})

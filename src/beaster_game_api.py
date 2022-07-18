@@ -65,7 +65,7 @@ def close_game(id: str) -> Response:
     except Exception as error_message:
         return Response(f'Unable to close game: {error_message}.', status=500)
 
-    return Response(response, status=204, mimetype='application/json')
+    return Response(response, status=200, mimetype='application/json')
 
 @beaster_game_api.route('/game/<id>', methods=['PUT'])
 def update_game(id: str) -> Response:

@@ -102,14 +102,10 @@ class GamesDAO:
         return create_game_from_document_ref(document_reference)
 
     @staticmethod
-    def insert(game: Game, result: Result = None) -> None:
-        if result == None:
-            result = Result(game.id, [], '')
-
+    def insert(game: Game) -> None:
         document_reference = GamesDAO.db.document(game.id)
 
         document_reference.set(format_game_to_store(game))
-        ResultsDAO.insert(result)
 
     @staticmethod
     def update(game: Game, id: str) -> None:
@@ -120,7 +116,6 @@ class GamesDAO:
     @staticmethod
     def delete(id: str) -> None:
         GamesDAO.db.document(id).delete()
-        ResultsDAO.delete(id)
 
     @staticmethod
     def close(id: str) -> None:

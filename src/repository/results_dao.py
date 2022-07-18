@@ -9,24 +9,19 @@ from google.cloud import firestore
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
-MOCKED_EPOCH: float = 1656681396.448879
-MOCKED_RESULT: list[Game] = Result('61be0f5f-a5c1-4e0a-92ef-686eac1e3699', [
-    Player('Tanan', Bet(50, 'Brazil')),
-    Player('Besca', Bet(35, 'Brazil'))
-], 'Brazil')
-
-class ResultsDAO: # This guy needs to connect to firebase firestore
+class ResultsDAO:
     db = firestore.Client(project='beaster-f041b').collection('results')
 
     @staticmethod
     def retrieve(id: str) -> Result:
-        document = ResultsDAO.db.document(id).get()
+        document = ResultsDAO.db.document(id).get().to_dict()
+        print(document)
         if not document: return None
 
         winners = []
-        for winner in document.to_dict().get('winners').items():
-            winner_name: str = winner[0]
-            winner_info: dict = winner[1]
+        for winner in document['winners']:
+            winner_name: str = winner['name']
+            winner_info: dict = winner['bet']
 
             winners.append(
                 Player(
@@ -38,14 +33,32 @@ class ResultsDAO: # This guy needs to connect to firebase firestore
         return Result(
             id, 
             winners, 
-            document.to_dict().get('champion')
+            document['champion']
         )
       
     @staticmethod
     def insert(result: Result) -> None:
-        
-        pass
+        document_reference = ResultsDAO.db.document(result.id)
+
+        winner_list = []
+        for winner in result.winners:
+            winner_list.append(
+                { 
+                  'name': winner.name, 
+                  'bet': {
+                    'value': winner.bet.value,
+                    'target': winner.bet.target,
+                    'created_at': winner.bet.created_at
+                    }
+                }
+            )
+
+        document_reference.set({
+            'id': result.id,
+            'winners': winner_list,
+            'champion': result.champion
+        })
 
     @staticmethod
     def delete(id: str) -> None:
-        pass
+        ResultsDAO.db.document(id).delete()

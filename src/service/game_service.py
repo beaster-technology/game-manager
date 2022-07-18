@@ -10,6 +10,7 @@ from src.service.utils import to_game
 
 from src.model.exception.invalid_uuid import InvalidUUID
 from src.model.exception.resource_not_found import ResourceNotFound
+from src.model.exception.invalid_close_game import InvalidCloseGame
 
 from src.validator.game_validator import GameValidator
 from src.serializer.game_serializer import GameSerializer
@@ -53,7 +54,8 @@ class GameService:
         target_game: Game = GamesDAO.retrieve(id)
         if not target_game: raise ResourceNotFound
 
-        champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
+        try: champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
+        except: raise InvalidCloseGame
 
         distribution: list[Player] = PotSplitter.calculate_pot_distribution(
             target_game.players,

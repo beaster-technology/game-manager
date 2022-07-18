@@ -10,6 +10,7 @@ from src.service.result_service import ResultService
 from src.model.exception.invalid_uuid import InvalidUUID
 from src.model.exception.resource_not_found import ResourceNotFound
 from src.model.exception.invalid_request_payload import InvalidRequestPayload
+from src.model.exception.invalid_close_game import InvalidCloseGame
 
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games() -> Response:
@@ -62,6 +63,8 @@ def close_game(id: str) -> Response:
         return Response(f'Invalid UUID passed as parameter.', status=400)
     except ResourceNotFound:
         return Response(f'Game with id {id} not found.', status=404)
+    except InvalidCloseGame:
+        return Response(f'Tried to close game with undetermined results.', status=500)
     except Exception as error_message:
         return Response(f'Unable to close game: {error_message}.', status=500)
 

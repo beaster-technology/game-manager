@@ -13,7 +13,8 @@ from src.model.exception.invalid_request_payload import InvalidRequestPayload
 
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games() -> Response:
-    try: response: str = GameService.list()
+    try: 
+        response: str = GameService.list()
         return Response(response, status=200, mimetype='application/json')
     except Exception as error_message:
         return Response(f'Unable to retrieve game list: {error_message}', status=500)

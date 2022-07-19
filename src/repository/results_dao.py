@@ -7,8 +7,6 @@ from src.model.player import Player
 from src.model.bet import Bet
 from google.cloud import firestore
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='../credentials/beaster-f041b-1f87f429ab75.json'
-
 class ResultsDAO:
     db = firestore.Client(project='beaster-f041b').collection('results')
 

@@ -7,7 +7,7 @@ from src.model.player import Player
 from src.model.bet import Bet
 from google.cloud import firestore
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]='/mnt/c/Users/henri/Meu Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
 class ResultsDAO:
     db = firestore.Client(project='beaster-f041b').collection('results')
@@ -15,7 +15,6 @@ class ResultsDAO:
     @staticmethod
     def retrieve(id: str) -> Result:
         document = ResultsDAO.db.document(id).get().to_dict()
-        print(document)
         if not document: return None
 
         winners = []
@@ -26,7 +25,7 @@ class ResultsDAO:
             winners.append(
                 Player(
                     winner_name, 
-                    Bet(winner_info.get('value'), winner_info.get('target'), winner_info.get('created_at'))
+                    Bet(winner_info['value'], winner_info['target'], winner_info['created_at'])
                 )
             )
 

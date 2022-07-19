@@ -13,7 +13,7 @@ from src.model.exception.invalid_request_payload import InvalidRequestPayload
 
 @beaster_game_api.route('/game', methods=['GET'])
 def list_games() -> Response:
-    try:
+    try: 
         response: str = GameService.list()
         return Response(response, status=200, mimetype='application/json')
     except Exception as error_message:
@@ -22,7 +22,6 @@ def list_games() -> Response:
 @beaster_game_api.route('/game/<id>', methods=['GET'])
 def get_game(id: str) -> Response:
     try: 
-        ResultService.get(id)
         response: str = GameService.get(id)
     except InvalidUUID:
         return Response(f'Invalid UUID passed as parameter.', status=400)

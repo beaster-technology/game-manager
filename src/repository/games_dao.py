@@ -1,6 +1,7 @@
 from locale import strcoll
 import os
 from platform import platform
+from re import I
 from this import d
 
 from jinja2 import TemplateRuntimeError
@@ -9,8 +10,11 @@ from src.model.competitor import Competitor
 from src.model.player import Player
 from src.model.bet import Bet
 from google.cloud import firestore
+from src.model.result import Result
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/mnt/d/Google Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
+from src.repository.results_dao import ResultsDAO
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/mnt/c/Users/henri/Meu Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
 
 def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> Game:
     document: dict = document_ref.get().to_dict()
@@ -84,13 +88,16 @@ class GamesDAO:
 
         game_list = []
         for doc in document_list:
-          game_list.append(create_game_from_document_ref(doc))
+          game = create_game_from_document_ref(doc)
+          if game != None:
+            if open_only and game.is_open: game_list.append(game)
+            elif not open_only: game_list.append(game)
 
         return game_list
         
     @staticmethod
     def retrieve(id: str) -> Game:
-        document_reference = GamesDAO.db.document(id).get()
+        document_reference = GamesDAO.db.document(id)
 
         return create_game_from_document_ref(document_reference)
 

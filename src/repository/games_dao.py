@@ -14,7 +14,7 @@ from src.model.result import Result
 
 from src.repository.results_dao import ResultsDAO
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']='/mnt/c/Users/henri/Meu Drive/Drive Pessoal/Trabalhos/2022.1/POO/Python/game-manager/credentials/beaster-f041b-1f87f429ab75.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='../credentials/beaster-f041b-1f87f429ab75.json'
 
 def create_game_from_document_ref(document_ref: firestore.DocumentReference) -> Game:
     document: dict = document_ref.get().to_dict()

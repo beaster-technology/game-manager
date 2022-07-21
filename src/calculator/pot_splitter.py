@@ -5,7 +5,11 @@ class PotSplitter:
     def calculate_pot_distribution(players: list[Player], champion: str) -> list[Player]:
         absolute_pot: float = sum(player.bet.value for player in players)
 
-        winners: list[Player] = list(filter(lambda player: player.bet.target == champion, players))
+        if champion == 'Empate':
+          winners: list[Player] = players
+        else:
+          winners: list[Player] = list(filter(lambda player: player.bet.target == champion, players))
+
         winners_pot: float = sum(player.bet.value for player in winners)
 
         distribution: list[Player] = [

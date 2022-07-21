@@ -20,3 +20,6 @@ class Game:
         self.players: list[Player] = players
         self.unit: str = unit
         self.is_open: bool = is_open
+
+    def game_is_tie(self) -> bool:
+      return self.teams[0].goals == self.teams[1].goals

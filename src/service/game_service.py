@@ -53,7 +53,11 @@ class GameService:
         target_game: Game = GamesDAO.retrieve(id)
         if not target_game: raise ResourceNotFound
 
-        champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
+        if target_game.game_is_tie():
+          champion_name = 'Empate'
+          
+        else:
+          champion_name: str = max(target_game.teams, key=attrgetter('goals')).name
 
         distribution: list[Player] = PotSplitter.calculate_pot_distribution(
             target_game.players,
